@@ -53,22 +53,41 @@ buttons_panel.pack()
 #lista products
 food_list = ['chicken', 'cordero', 'kebab', 'pizza1', 'pizza2']
 bev_list = ['agua', 'soda', 'jugo', 'coke', 'beer', 'wine']
-des_list = ['icecream', 'flan', 'cake', 'candy']
+des_list = ['icecream', 'flan', 'cake', 'candy', 'postre2']
+
 
 
 
 #generate food items
 food_variables = []
-
+food_text = []
+food_frames = []
 indx = 0
 
 for food in food_list:
     food_variables.append('')
     food_variables[indx] = tk.IntVar()
-    comida = tk.Checkbutton(food_frame, text=food.title(),
+    comida = tk.Checkbutton(food_frame,
+                            text=food.title(),
                             font=('Dosis', 19, 'bold'),
                             variable=food_variables[indx])
-    comida.grid(row=indx, column=0, sticky=tk.W)
+    comida.grid(row=indx,
+                column=0,
+                sticky=tk.W)
+
+    food_frames.append('')
+    food_text.append('')
+    food_frames[indx] = tk.Entry(food_frame,
+                                 font=('Dosis', 18, 'bold'),
+                                 bd =1,
+                                 width=6,
+                                 state= tk.DISABLED,
+                                 textvariable=food_text[indx])
+    food_frames[indx].grid(row=indx,
+                           column = 1)
+
+
+
     indx += 1
 
 #generate food items
