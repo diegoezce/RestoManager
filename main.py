@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import Checkbutton
 import random
 import datetime
-
+from tkinter import filedialog, messagebox
 
 operator = ''
 
@@ -137,12 +137,58 @@ def recibo():
         x += 1
 
 
-    rec_text.insert(tk.END, f'-' * 74 + '\n')
-    rec_text.insert(tk.END, f' Costo comida: \t\t\t{var_food_cost.get()}')
-    rec_text.insert(tk.END, f' Costo bebidas: \t\t\t{var_bev_cost.get()}')
-    rec_text.insert(tk.END, f' Costo postre: \t\t\t{var_des_cost.get()}')
+    rec_text.insert(tk.END, f'-' * 64 + '\n')
+    rec_text.insert(tk.END, f' Costo comida: \t\t\t{var_food_cost.get()}\n')
+    rec_text.insert(tk.END, f' Costo bebidas: \t\t\t{var_bev_cost.get()}\n')
+    rec_text.insert(tk.END, f' Costo postre: \t\t\t{var_des_cost.get()}\n')
+    
+    rec_text.insert(tk.END, f'-' * 64 + '\n')
+    rec_text.insert(tk.END, f' Subtotal: \t\t\t{var_subtotal.get()}\n')
+    rec_text.insert(tk.END, f' Impuestos: \t\t\t{var_impuestos.get()}\n')
+    rec_text.insert(tk.END, f' Total: \t\t\t{var_total.get()}')
 
-                    
+def guardar():
+    info_receipt = rec_text.get(1.0, tk.END)
+    file  = filedialog.asksaveasfile(mode='w', defaultextension='.txt')
+    file.write(info_receipt)
+    file.close()
+
+
+def reset():
+    rec_text.delete(0.1, tk.END)
+    for text in food_text:
+        text.set('0')
+    for text in bev_text:
+        text.set('0')
+    for text in des_text:
+        text.set('0')
+
+    for frame in food_frames:
+        frame.config(state=tk.DISABLED)
+    
+    for frame in bev_frames:
+        frame.config(state=tk.DISABLED)
+    
+    for frame in des_frames:
+        frame.config(state=tk.DISABLED)
+
+    for v in bev_variables:
+        v.set(0)
+
+    for v in food_variables:
+        v.set(0)
+
+    for v in des_variables:
+        v.set(0)
+
+
+    var_bev_cost.set('')
+    var_food_cost.set('')
+    var_des_cost.set('')
+    var_total.set('')
+    var_impuestos.set('')
+    var_subtotal.set('')
+    
 
 app = tk.Tk()
 
@@ -450,6 +496,8 @@ for button in buttons:
 
 buttons_created[0].config(command=total)
 buttons_created[1].config(command=recibo)
+buttons_created[2].config(command=guardar)
+buttons_created[3].config(command=reset)
 
 #Receipt AREA
 
